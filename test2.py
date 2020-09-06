@@ -15,7 +15,7 @@ import numpy as np
 import cv2
 import sys
 import time
-from tqdm import tqdm
+#from tqdm import tqdm
 import torchvision.utils as vutils
 import matplotlib.pyplot as plt
 #endregion !__IMPORT__
@@ -149,10 +149,10 @@ class MyDataLoader:
     pass
 
 class Net(nn.Module):
-    def __init__(self):
+    def __init__(self,num):
         super(Net, self).__init__()
         self.fc1 = torch.nn.Linear(28*28, 1000)
-        self.fc2 = torch.nn.Linear(1000, 3)
+        self.fc2 = torch.nn.Linear(1000, num)
  
     def forward(self, x):
         x = self.fc1(x)
@@ -162,6 +162,9 @@ class Net(nn.Module):
         return F.log_softmax(x, dim=1)
 
 if __name__ == "__main__":
+    print("Class num : ",end="")
+    num = input()
+
     #学習回数
     epoch = 20
 
@@ -173,11 +176,9 @@ if __name__ == "__main__":
     }
 
     #ネットワークを構築
-    net: torch.nn.Module = Net()
+    net: torch.nn.Module = Net(num=int(num))
 
     #データセット
-    print("Class num : ",end="")
-    num = input()
     Person = []
     cnt = 0
     print(num)
